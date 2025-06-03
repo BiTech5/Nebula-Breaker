@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
-    private JButton play;
+    private JButton play,settings,exit;
 
     public HomePage(int fr_width, int fr_height) {
         try {
@@ -24,20 +24,44 @@ public class HomePage extends JPanel {
         setLayout(null);
         setPreferredSize(new Dimension(fr_width, fr_height));
 
-        // Button
-        int buttonWidth = 100;
+        int buttonWidth = 150;
         int buttonHeight = 40;
-        int x = (fr_width - buttonWidth) / 2;
-        int y = fr_height - buttonHeight - 50;
+        // play button
+        int x_pl = (fr_width - buttonWidth) / 2;
+        int y_pl = fr_height - buttonHeight - 150;
 
-        play = new JButton("Play");
-        play.setBounds(x, y, buttonWidth, buttonHeight);
-        play.setBackground(Color.decode("#DB2B39"));
+        play = new JButton("PLAY");
+        play.setBounds(x_pl, y_pl, buttonWidth, buttonHeight);
+        play.setBackground(Color.decode("#106193"));
         play.setFont(new Font("Arial", Font.BOLD, 18));
         play.setForeground(Color.WHITE);
-        play.setBorderPainted(false);
         play.setFocusPainted(false);
         add(play);
+
+
+        // setting button
+        int x_se = (fr_width - buttonWidth) / 2;
+        int y_se = fr_height - buttonHeight - 100;
+
+        settings = new JButton("SETTINGS");
+        settings.setBounds(x_se, y_se, buttonWidth, buttonHeight);
+        settings.setBackground(Color.decode("#106193"));
+        settings.setFont(new Font("Arial", Font.BOLD, 18));
+        settings.setForeground(Color.WHITE);
+        settings.setFocusPainted(false);
+        add(settings);
+
+        // exit button
+        int x_ex = (fr_width - buttonWidth) / 2;
+        int y_ex = fr_height - buttonHeight - 50;
+
+        exit = new JButton("EXIT");
+        exit.setBounds(x_ex, y_ex, buttonWidth, buttonHeight);
+        exit.setBackground(Color.decode("#106193"));
+        exit.setFont(new Font("Arial", Font.BOLD, 18));
+        exit.setForeground(Color.WHITE);
+        exit.setFocusPainted(false);
+        add(exit);
     }
 
     @Override
