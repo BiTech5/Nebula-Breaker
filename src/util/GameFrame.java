@@ -17,7 +17,7 @@ public class GameFrame extends JFrame {
         this.setSize(width,height);
         this.setResizable(false);        
         this.setLocationRelativeTo(null); // making app  in center
-        this.setVisible(true);
         this.add(new HomePage(width,height)); // rendering home page Pannel
+        this.setVisible(true);
     }
 }
