@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
+import src.ui.GamePage;
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
@@ -38,7 +39,14 @@ public class HomePage extends JPanel {
         play.setFocusPainted(false);
         add(play);
 
-
+        play.addActionListener(e -> {
+            removeAll();
+            setLayout(new BorderLayout());
+            add(new GamePage(fr_width, fr_height));
+            backgroundImage = null;
+            revalidate();
+            repaint();
+        });
         // setting button
         int x_se = (fr_width - buttonWidth) / 2;
         int y_se = fr_height - buttonHeight - 100;
