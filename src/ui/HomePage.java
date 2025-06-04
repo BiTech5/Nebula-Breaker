@@ -1,4 +1,5 @@
 package src.ui;
+
 import src.ui.SettingsPage;
 import javax.swing.*;
 import java.awt.*;
@@ -7,11 +8,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 import src.ui.GamePage;
+
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
-    private JButton play,settings,exit;
+    private JButton play, settings, exit;
 // homepage constructor
+
     public HomePage(int fr_width, int fr_height) {
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/home/home.png"));
@@ -20,7 +23,6 @@ public class HomePage extends JPanel {
             System.out.print("Error loading background image");
             e.printStackTrace();
         }
-
 
         setLayout(null);
         setPreferredSize(new Dimension(fr_width, fr_height));
@@ -83,23 +85,23 @@ public class HomePage extends JPanel {
             dd.setLayout(new FlowLayout());
             dd.setSize(250, 100);
             dd.setResizable(false);
-        
+
             JButton yes = new JButton("Yes");
             JButton no = new JButton("No");
-        
+
             yes.setFocusPainted(false);
             no.setFocusPainted(false);
-        
+
             yes.addActionListener(event -> System.exit(0));
             no.addActionListener(event -> dd.dispose());
-        
+
             dd.add(yes);
             dd.add(no);
-        
-            dd.setLocationRelativeTo(null); 
+
+            dd.setLocationRelativeTo(null);
             dd.setVisible(true);
         });
-        
+
         add(exit);
     }
 
