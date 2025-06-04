@@ -11,7 +11,7 @@ public class HomePage extends JPanel {
 
     private Image backgroundImage;
     private JButton play,settings,exit;
-
+// homepage constructor
     public HomePage(int fr_width, int fr_height) {
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/home/home.png"));
