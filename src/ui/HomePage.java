@@ -78,6 +78,28 @@ public class HomePage extends JPanel {
         exit.setFont(new Font("Arial", Font.BOLD, 18));
         exit.setForeground(Color.WHITE);
         exit.setFocusPainted(false);
+        exit.addActionListener(e -> {
+            JDialog dd = new JDialog((Frame) null, "Do you want to exit?", true);
+            dd.setLayout(new FlowLayout());
+            dd.setSize(250, 100);
+            dd.setResizable(false);
+        
+            JButton yes = new JButton("Yes");
+            JButton no = new JButton("No");
+        
+            yes.setFocusPainted(false);
+            no.setFocusPainted(false);
+        
+            yes.addActionListener(event -> System.exit(0));
+            no.addActionListener(event -> dd.dispose());
+        
+            dd.add(yes);
+            dd.add(no);
+        
+            dd.setLocationRelativeTo(null); 
+            dd.setVisible(true);
+        });
+        
         add(exit);
     }
 
