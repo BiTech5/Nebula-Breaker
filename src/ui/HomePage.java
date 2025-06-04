@@ -1,11 +1,11 @@
 package src.ui;
-
+import src.ui.SettingsPage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-
+import java.awt.event.*;
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
@@ -50,6 +50,15 @@ public class HomePage extends JPanel {
         settings.setForeground(Color.WHITE);
         settings.setFocusPainted(false);
         add(settings);
+
+        settings.addActionListener(e -> {
+            removeAll();
+            setLayout(new BorderLayout());
+            add(new SettingsPage(fr_width, fr_height));
+            backgroundImage = null;
+            revalidate();
+            repaint();
+        });
 
         // exit button
         int x_ex = (fr_width - buttonWidth) / 2;
