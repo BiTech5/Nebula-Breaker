@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
+import src.ui.GamePage;
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
@@ -38,7 +39,14 @@ public class HomePage extends JPanel {
         play.setFocusPainted(false);
         add(play);
 
-
+        play.addActionListener(e -> {
+            removeAll();
+            setLayout(new BorderLayout());
+            add(new GamePage(fr_width, fr_height));
+            backgroundImage = null;
+            revalidate();
+            repaint();
+        });
         // setting button
         int x_se = (fr_width - buttonWidth) / 2;
         int y_se = fr_height - buttonHeight - 100;
@@ -70,6 +78,28 @@ public class HomePage extends JPanel {
         exit.setFont(new Font("Arial", Font.BOLD, 18));
         exit.setForeground(Color.WHITE);
         exit.setFocusPainted(false);
+        exit.addActionListener(e -> {
+            JDialog dd = new JDialog((Frame) null, "Do you want to exit?", true);
+            dd.setLayout(new FlowLayout());
+            dd.setSize(250, 100);
+            dd.setResizable(false);
+        
+            JButton yes = new JButton("Yes");
+            JButton no = new JButton("No");
+        
+            yes.setFocusPainted(false);
+            no.setFocusPainted(false);
+        
+            yes.addActionListener(event -> System.exit(0));
+            no.addActionListener(event -> dd.dispose());
+        
+            dd.add(yes);
+            dd.add(no);
+        
+            dd.setLocationRelativeTo(null); 
+            dd.setVisible(true);
+        });
+        
         add(exit);
     }
 
