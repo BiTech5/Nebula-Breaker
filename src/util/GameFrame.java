@@ -1,7 +1,7 @@
 package src.util;
 import java.awt.Color;
 import javax.swing.JFrame;
-import src.ui.HomePage;
+import src.view.HomePage;
 
 import javax.swing.ImageIcon;
 public class GameFrame extends JFrame {
