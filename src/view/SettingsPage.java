@@ -10,7 +10,10 @@ public class SettingsPage extends JPanel {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(fr_width, fr_height));
         l1=new JLabel("Setting Page");
-        l1.setForeground(Color.WHITE);
+
+        l1.setForeground(Color.BLACK);
+
+
         l1.setBounds(150,40,100,30);
         add(l1);
     }
