@@ -14,6 +14,8 @@ public class SettingsPage extends JPanel {
         l1.setForeground(Color.BLACK);
 
 
+
+
         l1.setBounds(150,40,100,30);
         add(l1);
     }
