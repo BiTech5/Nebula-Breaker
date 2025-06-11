@@ -1,13 +1,13 @@
-package src.ui;
+package src.view;
 
-import src.ui.SettingsPage;
+import src.view.SettingsPage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
-import src.ui.GamePage;
+import src.view.GamePage;
 
 public class HomePage extends JPanel {
 

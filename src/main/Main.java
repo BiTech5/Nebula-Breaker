@@ -1,5 +1,4 @@
 package src.main;
-
 import src.util.GameFrame;
 
 public class Main {
