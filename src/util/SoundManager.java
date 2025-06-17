@@ -13,7 +13,7 @@ public class SoundManager {
                 AudioInputStream audioInput=AudioSystem.getAudioInputStream(musicPath);
                 Clip clip=AudioSystem.getClip();
                 clip.open(audioInput);
-                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
             }
             else{
                 System.out.println("File not find");
