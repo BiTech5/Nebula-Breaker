@@ -16,6 +16,8 @@ public class HomePage extends JPanel {
 // homepage constructor
 
     public HomePage(int fr_width, int fr_height) {
+
+        
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/home/home.png"));
             backgroundImage = originalImage.getScaledInstance(fr_width, fr_height, Image.SCALE_SMOOTH);
