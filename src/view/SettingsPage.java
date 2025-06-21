@@ -11,10 +11,20 @@ public class SettingsPage extends JPanel {
     private JButton home;
     private Image backgroundImage;
     private JPanel mainBox;
+    private JPanel audioBox;
+    private JLabel audio;
+
+    //Audio controls
+    private JLabel musicLabel;
+    private JLabel soundEffLabel;
 
     public SettingsPage(int fr_width, int fr_height){
         setLayout(null);
         setPreferredSize(new Dimension(fr_width, fr_height));
+
+        audio = new JLabel("AUDIO");
+        musicLabel = new JLabel("MUSIC");
+        soundEffLabel = new JLabel("SOUND EFFECTS");
 
         try{
         BufferedImage bgImage = ImageIO.read(new File("assets/images/nebula_breaker_bg_img.png"));
@@ -60,20 +70,66 @@ public class SettingsPage extends JPanel {
         int x_title = (fr_width - labelWidth) / 2;
         l1.setBounds(x_title, y_title, labelWidth, labelHeight);
 
+        //Audio
+        audioBox = new JPanel();
+        audioBox.setOpaque(true);
+        audioBox.setBackground(new Color(0,0,50,(int)(0.5 * 255)));
+        audioBox.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 1));
+        audioBox.setLayout(null);
+        
+        int audioBoxWidth = 230;
+        int audioBoxHeight = 150;
+        int x_audioBox = ((fr_width - audioBoxWidth)/2) - 10;
+        int y_audioBox = (fr_height - audioBoxHeight - 300) -10;
+        audioBox.setBounds(x_audioBox, y_audioBox, audioBoxWidth, audioBoxHeight);
+
+
+        //audio styling
+        audio.setForeground(Color.decode("#A0F8FF"));
+        audio.setFont(new Font("SansSerif", Font.BOLD, 18));
+
+        int audioWidth = 150;
+        int audioHeight = 40;
+        int x_audioTitle = ((audioBoxWidth - audioWidth)/2);
+        int y_audioTitle = 5;
+        audio.setBounds(x_audioTitle, y_audioTitle, audioWidth, audioHeight);
+
+        //Music
+        //music label styling
+        musicLabel.setForeground(Color.decode("#A0F8FF"));
+        musicLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        musicLabel.setBounds(10, 50, 80, 20);
+
+
+        //sound effects styling
+        soundEffLabel.setForeground(Color.decode("#A0F8FF"));
+        soundEffLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        soundEffLabel.setBounds(10, 100, 200, 20);
+
         //Main box
         mainBox = new JPanel();
         int mainBoxWidth = 250;
         int mainBoxHeight = 400;
-        int x_box = (fr_width - mainBoxWidth) / 2;
+        int x_box = ((fr_width - mainBoxWidth) / 2)-10;
         int y_box = fr_height - mainBoxHeight - 70;
         mainBox.setBounds(x_box, y_box, mainBoxWidth, mainBoxHeight);
         mainBox.setOpaque(false);
         mainBox.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 2));
         mainBox.setBackground(Color.WHITE);
+        audio.setHorizontalAlignment(SwingConstants.CENTER);
 
+
+        
+
+
+        audioBox.add(audio);
+        audioBox.add(musicLabel);
+        audioBox.add(soundEffLabel);
         add(l1);
         add(home);
         add(mainBox);
+        add(audioBox);
+        
 
         
     }
