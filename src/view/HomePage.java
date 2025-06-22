@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
+
+import src.model.GameModel;
 import src.view.GamePage;
 
 public class HomePage extends JPanel {
@@ -29,6 +31,7 @@ public class HomePage extends JPanel {
 
         int buttonWidth = 150;
         int buttonHeight = 40;
+        
         // play button
         int x_pl = (fr_width - buttonWidth) / 2;
         int y_pl = fr_height - buttonHeight - 150;
@@ -44,7 +47,7 @@ public class HomePage extends JPanel {
         play.addActionListener(e -> {
             removeAll();
             setLayout(new BorderLayout());
-            add(new GamePage(fr_width, fr_height));
+            add(new GamePage(new GameModel(), fr_width, fr_height));
             backgroundImage = null;
             revalidate();
             repaint();
