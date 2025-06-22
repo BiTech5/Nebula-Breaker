@@ -1,8 +1,8 @@
 package src.view;
 
-import src.model.GameModel;
-import src.model.GameModel.Bullet;
-import src.model.GameModel.Enemy;
+import src.core.GameModel;
+import src.core.GameModel.Bullet;
+import src.core.GameModel.Enemy;
 
 import javax.swing.*;
 import java.awt.*;

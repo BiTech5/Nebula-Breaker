@@ -8,9 +8,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 
-import src.model.GameModel;
-import src.view.GamePage;
-
+import src.core.GameModel;
+import src.core.PageNavigator;
+import src.view.SettingsPage;
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
@@ -18,6 +18,8 @@ public class HomePage extends JPanel {
 // homepage constructor
 
     public HomePage(int fr_width, int fr_height) {
+
+        
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/home/home.png"));
             backgroundImage = originalImage.getScaledInstance(fr_width, fr_height, Image.SCALE_SMOOTH);
@@ -31,7 +33,6 @@ public class HomePage extends JPanel {
 
         int buttonWidth = 150;
         int buttonHeight = 40;
-        
         // play button
         int x_pl = (fr_width - buttonWidth) / 2;
         int y_pl = fr_height - buttonHeight - 150;
@@ -45,12 +46,8 @@ public class HomePage extends JPanel {
         add(play);
 
         play.addActionListener(e -> {
-            removeAll();
-            setLayout(new BorderLayout());
-            add(new GamePage(new GameModel(), fr_width, fr_height));
+            PageNavigator.navigateTo(this, new GamePage(new GameModel(),fr_width, fr_height));
             backgroundImage = null;
-            revalidate();
-            repaint();
         });
         // setting button
         int x_se = (fr_width - buttonWidth) / 2;
@@ -65,12 +62,8 @@ public class HomePage extends JPanel {
         add(settings);
 
         settings.addActionListener(e -> {
-            removeAll();
-            setLayout(new BorderLayout());
-            add(new SettingsPage(fr_width, fr_height));
-            backgroundImage = null;
-            revalidate();
-            repaint();
+           PageNavigator.navigateTo(this, new SettingsPage(fr_width, fr_height));
+            backgroundImage = null; 
         });
 
         // exit button
