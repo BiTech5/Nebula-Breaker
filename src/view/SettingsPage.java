@@ -124,7 +124,6 @@ public class SettingsPage extends JPanel {
         
 
 
-
         //Main box
         mainBox = new JPanel();
         int mainBoxWidth = 250;
