@@ -16,7 +16,7 @@ public class SettingsPage extends JPanel {
 
     //Audio controls
     private JLabel musicLabel;
-    private JLabel soundEffLabel;
+    private JToggleButton toggleMusicBtn;
 
     public SettingsPage(int fr_width, int fr_height){
         setLayout(null);
@@ -24,7 +24,6 @@ public class SettingsPage extends JPanel {
 
         audio = new JLabel("AUDIO");
         musicLabel = new JLabel("MUSIC");
-        soundEffLabel = new JLabel("SOUND EFFECTS");
 
         try{
         BufferedImage bgImage = ImageIO.read(new File("assets/images/nebula_breaker_bg_img.png"));
@@ -78,15 +77,15 @@ public class SettingsPage extends JPanel {
         audioBox.setLayout(null);
         
         int audioBoxWidth = 230;
-        int audioBoxHeight = 150;
+        int audioBoxHeight = 90;
         int x_audioBox = ((fr_width - audioBoxWidth)/2) - 10;
-        int y_audioBox = (fr_height - audioBoxHeight - 300) -10;
+        int y_audioBox = (fr_height - audioBoxHeight - 300) -70;
         audioBox.setBounds(x_audioBox, y_audioBox, audioBoxWidth, audioBoxHeight);
 
 
         //audio styling
         audio.setForeground(Color.decode("#A0F8FF"));
-        audio.setFont(new Font("SansSerif", Font.BOLD, 18));
+        audio.setFont(new Font("SansSerif", Font.BOLD, 20));
 
         int audioWidth = 150;
         int audioHeight = 40;
@@ -100,11 +99,31 @@ public class SettingsPage extends JPanel {
         musicLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         musicLabel.setBounds(10, 50, 80, 20);
 
+        //toggle music
+        toggleMusicBtn = new JToggleButton("ON");
+        toggleMusicBtn.setForeground(Color.decode("#A0F8FF"));
+        toggleMusicBtn.setFont(new Font("SansSerif", Font.BOLD, 16));
+        toggleMusicBtn.setBackground(Color.decode("#0D0D0D"));
+        toggleMusicBtn.setOpaque(true);
+        toggleMusicBtn.setFocusPainted(false);
+        toggleMusicBtn.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"),1));
 
-        //sound effects styling
-        soundEffLabel.setForeground(Color.decode("#A0F8FF"));
-        soundEffLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        soundEffLabel.setBounds(10, 100, 200, 20);
+        int musicBtnWidth = 50;
+        int musicBtnHeight = 25;
+        int x_musicBtn = ((audioBoxWidth - musicBtnWidth)/2) + 70;
+        int y_musicBtn = 50;
+        toggleMusicBtn.setBounds(x_musicBtn, y_musicBtn, musicBtnWidth, musicBtnHeight);
+
+        toggleMusicBtn.addActionListener(e -> {
+            if(toggleMusicBtn.isSelected()){
+                toggleMusicBtn.setText("OFF");
+            }else{
+                toggleMusicBtn.setText("ON");
+            }
+        });
+        
+
+
 
         //Main box
         mainBox = new JPanel();
@@ -124,7 +143,7 @@ public class SettingsPage extends JPanel {
 
         audioBox.add(audio);
         audioBox.add(musicLabel);
-        audioBox.add(soundEffLabel);
+        audioBox.add(toggleMusicBtn);
         add(l1);
         add(home);
         add(mainBox);
