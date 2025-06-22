@@ -22,12 +22,19 @@ public class SettingsPage extends JPanel {
     private JLabel musicLabel;
     private JToggleButton toggleMusicBtn;
 
+    //difficulty level
+    private JPanel difficultyLevelBox;
+    private JLabel difficultyLevel;
+    private JComboBox <String> chooseLevel;
+
     public SettingsPage(int fr_width, int fr_height) {
         setLayout(null);
         setPreferredSize(new Dimension(fr_width, fr_height));
 
         audio = new JLabel("AUDIO");
         musicLabel = new JLabel("MUSIC");
+        
+        difficultyLevel = new JLabel("LEVEL");
 
         try {
             BufferedImage bgImage = ImageIO.read(new File("assets/images/nebula_breaker_bg_img.png"));
@@ -83,9 +90,9 @@ public class SettingsPage extends JPanel {
         audioBox.setLayout(null);
 
         int audioBoxWidth = 230;
-        int audioBoxHeight = 90;
+        int audioBoxHeight = 150;
         int x_audioBox = ((fr_width - audioBoxWidth) / 2) - 10;
-        int y_audioBox = (fr_height - audioBoxHeight - 300) - 70;
+        int y_audioBox = (fr_height - audioBoxHeight - 300) - 10;
         audioBox.setBounds(x_audioBox, y_audioBox, audioBoxWidth, audioBoxHeight);
 
         //audio styling
@@ -95,14 +102,14 @@ public class SettingsPage extends JPanel {
         int audioWidth = 150;
         int audioHeight = 40;
         int x_audioTitle = ((audioBoxWidth - audioWidth) / 2);
-        int y_audioTitle = 5;
+        int y_audioTitle = 20;
         audio.setBounds(x_audioTitle, y_audioTitle, audioWidth, audioHeight);
 
         //Music
         //music label styling
         musicLabel.setForeground(Color.decode("#A0F8FF"));
         musicLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        musicLabel.setBounds(10, 50, 80, 20);
+        musicLabel.setBounds(30, 70, 80, 20);
 
         //toggle music
         toggleMusicBtn = new JToggleButton("ON");
@@ -115,8 +122,8 @@ public class SettingsPage extends JPanel {
 
         int musicBtnWidth = 50;
         int musicBtnHeight = 25;
-        int x_musicBtn = ((audioBoxWidth - musicBtnWidth) / 2) + 70;
-        int y_musicBtn = 50;
+        int x_musicBtn = ((audioBoxWidth - musicBtnWidth) / 2) + 50;
+        int y_musicBtn = 70;
         toggleMusicBtn.setBounds(x_musicBtn, y_musicBtn, musicBtnWidth, musicBtnHeight);
 
         PlayMusic musicPlayer = new PlayMusic();
@@ -129,6 +136,39 @@ public class SettingsPage extends JPanel {
                 musicPlayer.play(true);
             }
         });
+
+        //Game difficulty level
+        difficultyLevelBox  = new JPanel();
+        difficultyLevelBox.setOpaque(true);
+        difficultyLevelBox.setBackground(new Color(0,0,50,(int)(0.5 * 255)));
+        difficultyLevelBox.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 1));
+        difficultyLevelBox.setLayout(null);
+        
+        int diffLevelBoxWidth = 230;
+        int diffLevelBoxHeight = 220;
+        int x_levelBox = x_audioBox;
+        int y_levelBox = y_audioBox + audioBoxHeight + 10;
+        difficultyLevelBox.setBounds(x_levelBox, y_levelBox, diffLevelBoxWidth, diffLevelBoxHeight);
+
+        //difficulty level label
+        difficultyLevel.setForeground(Color.decode("#A0F8FF"));
+        difficultyLevel.setFont(new Font("SansSerif", Font.BOLD, 20));
+
+        int diffLevelWidth = 150;
+        int diffLevelHeight = 40;
+        int x_diffLevelTitle = ((diffLevelBoxWidth - diffLevelWidth) / 2) + 40;
+        int y_diffLevelTitle =  20;
+        difficultyLevel.setBounds(x_diffLevelTitle, y_diffLevelTitle, diffLevelWidth, diffLevelHeight);
+
+        //choose difficulty level
+        String[] levels = {"EASY", "MEDIUM", "HARD"};
+        chooseLevel = new JComboBox<>(levels);
+        chooseLevel.setForeground(Color.decode("#A0F8FF"));
+        chooseLevel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        chooseLevel.setBackground(Color.decode("#0D0D0D"));
+        chooseLevel.setOpaque(true);
+        chooseLevel.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 1));
+        chooseLevel.setBounds(40, 70, 150, 30);
 
         //Main box
         mainBox = new JPanel();
@@ -145,10 +185,16 @@ public class SettingsPage extends JPanel {
         audioBox.add(audio);
         audioBox.add(musicLabel);
         audioBox.add(toggleMusicBtn);
+
+        difficultyLevelBox.add(difficultyLevel);
+        difficultyLevelBox.add(chooseLevel);
+
+
         add(l1);
         add(home);
         add(mainBox);
         add(audioBox);
+        add(difficultyLevelBox);
 
     }
 
