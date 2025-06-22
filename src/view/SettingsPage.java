@@ -57,7 +57,14 @@ public class SettingsPage extends JPanel {
         home.setIconTextGap(8);
         home.setOpaque(true);
         home.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"),2));
-
+        home.addActionListener(e->{
+            removeAll();
+            setLayout(new BorderLayout());
+            add(new HomePage(fr_width, fr_height));
+            backgroundImage=null;
+            revalidate();
+            repaint();
+        });
 
         //Title
         l1 = new JLabel();
