@@ -1,6 +1,7 @@
 mkdir -p bin
 
-find src -name "*.java" -type f | xargs javac -d bin
+javac -d bin $(find src -name "*.java")
+
 
 cd bin
 java src.main.Main

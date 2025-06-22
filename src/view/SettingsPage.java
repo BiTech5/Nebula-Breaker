@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
+import src.core.PageNavigator;
 public class SettingsPage extends JPanel {
     private JLabel l1;
     private JButton home;
@@ -56,7 +56,10 @@ public class SettingsPage extends JPanel {
         home.setIconTextGap(8);
         home.setOpaque(true);
         home.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"),2));
-
+        home.addActionListener(e->{
+            PageNavigator.navigateTo(this, new HomePage(fr_width, fr_height));
+            backgroundImage = null;
+        });
 
         //Title
         l1 = new JLabel();
