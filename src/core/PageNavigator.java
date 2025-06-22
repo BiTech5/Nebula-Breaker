@@ -9,9 +9,9 @@ public class PageNavigator {
         container.setLayout(new BorderLayout());
         container.add(newPage);
         
-        if (container instanceof JComponent) {
-            ((JComponent) container).revalidate();
-            ((JComponent) container).repaint();
+        if (container instanceof JComponent jComponent) {
+            jComponent.revalidate();
+            jComponent.repaint();
         }
     }
 }
