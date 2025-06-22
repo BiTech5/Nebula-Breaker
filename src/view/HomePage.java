@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
+
+import src.core.PageNavigator;
 import src.view.GamePage;
 
 public class HomePage extends JPanel {
@@ -44,12 +46,8 @@ public class HomePage extends JPanel {
         add(play);
 
         play.addActionListener(e -> {
-            removeAll();
-            setLayout(new BorderLayout());
-            add(new GamePage(fr_width, fr_height));
-            backgroundImage = null;
-            revalidate();
-            repaint();
+            PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height));
+        backgroundImage = null;
         });
         // setting button
         int x_se = (fr_width - buttonWidth) / 2;
@@ -64,12 +62,8 @@ public class HomePage extends JPanel {
         add(settings);
 
         settings.addActionListener(e -> {
-            removeAll();
-            setLayout(new BorderLayout());
-            add(new SettingsPage(fr_width, fr_height));
-            backgroundImage = null;
-            revalidate();
-            repaint();
+           PageNavigator.navigateTo(this, new SettingsPage(fr_width, fr_height));
+            backgroundImage = null; 
         });
 
         // exit button
