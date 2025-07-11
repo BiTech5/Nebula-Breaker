@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import src.core.PlayerBullet;
 import java.util.List;
 import java.util.ArrayList;
-import javax.swing.Timer;
+
 import src.core.Enemy;
 import src.core.EnemyBullet;
 public class GamePage extends JPanel implements KeyListener {
@@ -22,6 +22,11 @@ public class GamePage extends JPanel implements KeyListener {
     private List<Enemy> enemies = new ArrayList<>();
     private List<EnemyBullet> enemyBullets = new ArrayList<>();
     private long lastEnemyFireTime = 0;
+
+    private JLabel scoreLabel;
+    private JLabel livesLabel;
+    private int score = 0;
+    private int lives = 3;
 
 
     public GamePage(int fr_width, int fr_height) {
@@ -67,6 +72,19 @@ public class GamePage extends JPanel implements KeyListener {
         });
         gameTimer.start();
 
+        //Score and Lives
+        scoreLabel = new JLabel("Score: 0");
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
+        scoreLabel.setBounds(10, 5, 150 ,30);
+
+        livesLabel = new JLabel("Lives:");
+        livesLabel.setForeground(Color.WHITE);
+        livesLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
+        livesLabel.setBounds(200, 5, 150 ,30);
+
+        add(scoreLabel);
+        add(livesLabel);
     }
 
     @Override
@@ -88,6 +106,11 @@ public class GamePage extends JPanel implements KeyListener {
         }
         for (EnemyBullet b : enemyBullets)
             g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+
+        for(int i=0; i<lives; i++){
+            g.setColor(Color.RED);
+            g.fillRect(250 + i * 25, 15, 20, 15);
+        }
         
     }
 
