@@ -112,7 +112,12 @@ public class SettingsPage extends JPanel {
         musicLabel.setBounds(30, 70, 80, 20);
 
         //toggle music
-        toggleMusicBtn = new JToggleButton("ON");
+        if(PlayMusic.musicOn){
+            toggleMusicBtn = new JToggleButton("ON", false);
+        }else{
+            toggleMusicBtn = new JToggleButton("OFF", true);
+        }
+        
         toggleMusicBtn.setForeground(Color.decode("#A0F8FF"));
         toggleMusicBtn.setFont(new Font("SansSerif", Font.BOLD, 16));
         toggleMusicBtn.setBackground(Color.decode("#0D0D0D"));
@@ -161,7 +166,7 @@ public class SettingsPage extends JPanel {
         difficultyLevel.setBounds(x_diffLevelTitle, y_diffLevelTitle, diffLevelWidth, diffLevelHeight);
 
         //choose difficulty level
-        String[] levels = {"EASY", "MEDIUM", "HARD"};
+        String[] levels = {"EASY", "MEDIUM", "HARD","VERY HARD"};
         chooseLevel = new JComboBox<>(levels);
         chooseLevel.setForeground(Color.decode("#A0F8FF"));
         chooseLevel.setFont(new Font("SansSerif", Font.BOLD, 16));
