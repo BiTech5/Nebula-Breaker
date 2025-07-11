@@ -8,16 +8,21 @@ import javax.imageio.ImageIO;
 import src.core.Player;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import src.core.Bullet;
+import src.core.PlayerBullet;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.Timer;
-
+import src.core.Enemy;
+import src.core.EnemyBullet;
 public class GamePage extends JPanel implements KeyListener {
     private Image backgroundImage;
     private Player player;
-    private List<Bullet> bullets = new ArrayList<>();
+    private List<PlayerBullet> bullets = new ArrayList<>();
     private Timer gameTimer;
+    private List<Enemy> enemies = new ArrayList<>();
+    private List<EnemyBullet> enemyBullets = new ArrayList<>();
+    private long lastEnemyFireTime = 0;
+
 
     public GamePage(int fr_width, int fr_height) {
         try {
@@ -31,13 +36,33 @@ public class GamePage extends JPanel implements KeyListener {
         setPreferredSize(new Dimension(fr_width, fr_height));
 
         player = new Player(125, 460, 100, 100);
-
+        for (int i = 0; i < 3; i++) {
+            int randX = (int) (Math.random() * (fr_width - 50));
+            int randY = 20 + (int) (Math.random() * 80); 
+            enemies.add(new Enemy(randX, randY));
+        }
         // game loop timer to move bullets and repaint
         gameTimer = new Timer(16, e -> {
-            bullets.removeIf(Bullet::isOffScreen);
-            for (Bullet bullet : bullets) {
+            bullets.removeIf(PlayerBullet::isOffScreen);
+            for (PlayerBullet bullet : bullets) {
                 bullet.move();
             }
+            for (Enemy en : enemies) {
+                en.move(getWidth()); 
+            }
+            
+
+            enemyBullets.removeIf(b -> b.isOffScreen(getHeight()));
+            for (EnemyBullet eb : enemyBullets) eb.move();
+
+            if (System.currentTimeMillis() - lastEnemyFireTime > 1000) {
+                for (Enemy en : enemies) {
+                    enemyBullets.add(new EnemyBullet(en.getX() + 20, en.getY() + 50));
+                }
+                lastEnemyFireTime = System.currentTimeMillis();
+            }
+
+           
             repaint();
         });
         gameTimer.start();
@@ -54,9 +79,16 @@ public class GamePage extends JPanel implements KeyListener {
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
         }
 
-        for (Bullet bullet : bullets) {
+        for (PlayerBullet bullet : bullets) {
             g.drawImage(bullet.getImage(), bullet.getX(), bullet.getY(), this);
         }
+
+        for (Enemy enemy : enemies) {
+            g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+        }
+        for (EnemyBullet b : enemyBullets)
+            g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+        
     }
 
     @Override
@@ -96,8 +128,8 @@ public class GamePage extends JPanel implements KeyListener {
             int bullet2X = shipX + shipWidth - bulletWidth - 10; 
             int bullet2Y = shipY - 20;
 
-            bullets.add(new Bullet(bullet1X, bullet1Y, bulletWidth, bulletHeight));
-            bullets.add(new Bullet(bullet2X, bullet2Y, bulletWidth, bulletHeight));
+            bullets.add(new PlayerBullet(bullet1X, bullet1Y, bulletWidth, bulletHeight));
+            bullets.add(new PlayerBullet(bullet2X, bullet2Y, bulletWidth, bulletHeight));
         }
         player.move(dx, dy, getWidth(), getHeight());
         repaint();

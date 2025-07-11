@@ -1,26 +1,24 @@
 package src.core;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Bullet {
+public class PlayerBullet {
     private int x, y;
     private final int speed = 15;
     private final Image bulletImage;
     public int width, height;
 
-    public Bullet(int x, int y, int width, int height) {
+    public PlayerBullet(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         Image tempImage;
         try {
-            BufferedImage originalImage = ImageIO.read(new File("assets/images/bullet/bullets.png"));
+            BufferedImage originalImage = ImageIO.read(new File("assets/images/bullet/player_bullet.png"));
             tempImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         } catch (Exception e) {
             System.out.println("Error loading player spaceship image");
