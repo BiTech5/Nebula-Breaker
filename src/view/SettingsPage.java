@@ -166,7 +166,7 @@ public class SettingsPage extends JPanel {
         difficultyLevel.setBounds(x_diffLevelTitle, y_diffLevelTitle, diffLevelWidth, diffLevelHeight);
 
         //choose difficulty level
-        String[] levels = {"EASY", "MEDIUM", "HARD","HARD"};
+        String[] levels = {"EASY", "MEDIUM", "HARD"};
         chooseLevel = new JComboBox<>(levels);
         chooseLevel.setForeground(Color.decode("#A0F8FF"));
         chooseLevel.setFont(new Font("SansSerif", Font.BOLD, 16));
