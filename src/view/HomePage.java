@@ -1,5 +1,6 @@
 package src.view;
 
+import src.view.LeadershipBoard;
 import src.view.SettingsPage;
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +15,11 @@ import src.view.GamePage;
 public class HomePage extends JPanel {
 
     private Image backgroundImage;
-    private JButton play, settings, exit;
-// homepage constructor
+    private JButton play, settings, exit, leadershipboard;
+    // homepage constructor
 
     public HomePage(int fr_width, int fr_height) {
 
-        
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/home/home.png"));
             backgroundImage = originalImage.getScaledInstance(fr_width, fr_height, Image.SCALE_SMOOTH);
@@ -33,9 +33,22 @@ public class HomePage extends JPanel {
 
         int buttonWidth = 150;
         int buttonHeight = 40;
+        int x_lb = (fr_width - buttonWidth) / 2;
+        int y_lb = fr_height - buttonHeight - 150;
+        leadershipboard = new JButton("Leadership");
+        leadershipboard.setBounds(x_lb, y_lb, buttonWidth, buttonHeight);
+        leadershipboard.setBackground(Color.decode("#106193"));
+        leadershipboard.setFont(new Font("Arial", Font.BOLD, 18));
+        leadershipboard.setForeground(Color.WHITE);
+        leadershipboard.setFocusPainted(false);
+        add(leadershipboard);
+        leadershipboard.addActionListener(e -> {
+            PageNavigator.navigateTo(this, new LeadershipBoard(fr_width, fr_height));
+            backgroundImage = null;
+        });
         // play button
         int x_pl = (fr_width - buttonWidth) / 2;
-        int y_pl = fr_height - buttonHeight - 150;
+        int y_pl = fr_height - buttonHeight - 200;
 
         play = new JButton("PLAY");
         play.setBounds(x_pl, y_pl, buttonWidth, buttonHeight);
@@ -47,7 +60,7 @@ public class HomePage extends JPanel {
 
         play.addActionListener(e -> {
             PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height));
-        backgroundImage = null;
+            backgroundImage = null;
         });
         // setting button
         int x_se = (fr_width - buttonWidth) / 2;
@@ -62,8 +75,8 @@ public class HomePage extends JPanel {
         add(settings);
 
         settings.addActionListener(e -> {
-           PageNavigator.navigateTo(this, new SettingsPage(fr_width, fr_height));
-            backgroundImage = null; 
+            PageNavigator.navigateTo(this, new SettingsPage(fr_width, fr_height));
+            backgroundImage = null;
         });
 
         // exit button
