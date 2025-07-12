@@ -38,4 +38,7 @@ public class EnemyBullet {
     public int getX() { return x; }
     public int getY() { return y; }
     public Image getImage() { return image; }
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
+    }
 }

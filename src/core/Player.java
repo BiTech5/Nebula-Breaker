@@ -1,6 +1,6 @@
 package src.core;
 
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -60,4 +60,8 @@ public class Player {
         if (y > panelHeight - playerImage.getHeight(null))
             y = panelHeight - playerImage.getHeight(null);
     }
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height); 
+    }
+    
 }

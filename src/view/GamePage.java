@@ -16,6 +16,9 @@ import src.core.Enemy;
 import src.core.EnemyBullet;
 import src.core.GameModel.Bullet;
 
+import src.core.PageNavigator;
+import src.view.HomePage;
+
 public class GamePage extends JPanel implements KeyListener {
 
     private Image backgroundImage;
@@ -34,7 +37,12 @@ public class GamePage extends JPanel implements KeyListener {
     private long lastEnemySpawnTime = 0;
     private int maxEnemies = 5;
 
+    private int fr_width;
+    private int fr_height;
+
     public GamePage(int fr_width, int fr_height) {
+        this.fr_width = fr_width;
+        this.fr_height = fr_height;
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/nebula_breaker_bg_img.png"));
             backgroundImage = originalImage.getScaledInstance(fr_width, fr_height, Image.SCALE_SMOOTH);
@@ -60,11 +68,34 @@ public class GamePage extends JPanel implements KeyListener {
             for (Enemy en : enemies) {
                 en.move(getWidth());
             }
+            List<EnemyBullet> enemyBulletsToRemove = new ArrayList<>();
 
+            Rectangle playerRect = player.getBounds();
             enemyBullets.removeIf(b -> b.isOffScreen(getHeight()));
             for (EnemyBullet eb : enemyBullets) {
                 eb.move();
             }
+            for (EnemyBullet eb : enemyBullets) {
+                if (playerRect.intersects(eb.getBounds())) {
+                    enemyBulletsToRemove.add(eb);
+                    lives--;
+
+                    if (lives <= 0) {
+                        gameTimer.stop();
+
+                        GameOver gameOverPanel = new GameOver(score,
+                                e1 -> restartGame(),
+                                e2 -> goHome()
+                        );
+
+                        gameOverPanel.setBounds(0, 0, getWidth(), getHeight());
+                        add(gameOverPanel);
+                        revalidate();
+                        repaint();
+                    }
+                }
+            }
+            enemyBullets.removeAll(enemyBulletsToRemove);
 
             if (System.currentTimeMillis() - lastEnemyFireTime > 1000) {
                 for (Enemy en : enemies) {
@@ -116,10 +147,20 @@ public class GamePage extends JPanel implements KeyListener {
         livesLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
         livesLabel.setBounds(200, 5, 150, 30);
 
+        // PageNavigator.navigateTo(this, new HomePage(this.fr_width, this.fr_height));
         add(scoreLabel);
         add(livesLabel);
     }
 
+    private void goHome() {
+        PageNavigator.navigateTo(this, new HomePage(fr_width, fr_height));
+        backgroundImage = null;
+    }
+    private void restartGame() {
+        PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height));
+        backgroundImage = null;
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
