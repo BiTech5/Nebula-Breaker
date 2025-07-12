@@ -108,13 +108,13 @@ public class GamePage extends JPanel implements KeyListener {
     }
 
     private void setupLabels() {
-        scoreLabel = new JLabel("Score: 0");
-        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel = new JLabel("Score: ");
+        scoreLabel.setForeground(Color.decode("#8c8c8c"));
         scoreLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
         scoreLabel.setBounds(10, 5, 150, 30);
 
         livesLabel = new JLabel("Lives:");
-        livesLabel.setForeground(Color.WHITE);
+        livesLabel.setForeground(Color.decode("#8c8c8c"));
         livesLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
         livesLabel.setBounds(200, 5, 150, 30);
 
@@ -172,14 +172,9 @@ public class GamePage extends JPanel implements KeyListener {
 
         for (int i = 0; i < lives; i++) {
             if (i >0) {
-                scoreLabel.setVisible(true);
-                livesLabel.setVisible(true);
                 g.setColor(Color.RED);
                 g.fillRect(250 + i * 25, 15, 20, 15);
-            } else {
-                scoreLabel.setVisible(false);
-                livesLabel.setVisible(false);
-            }
+            } 
         }
 
     }
