@@ -7,12 +7,34 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import src.view.GamePage;
+import src.view.SettingsPage;
 public class GameEngine {
     private final GamePage gamePage;
+    private int enemyBulletDelay;
+    private int enemySpawnDelay;
+    private double fireBulletChance;
 
     public GameEngine(GamePage gamePage) {
         this.gamePage = gamePage;
+
+        String difficultyLevel = SettingsPage.getSelectedLevel();
+        if(difficultyLevel.equalsIgnoreCase("EASY")){
+            enemyBulletDelay = 2000;
+            enemySpawnDelay = 4000;
+            fireBulletChance = 0.2;
+        }else if(difficultyLevel.equalsIgnoreCase("MEDIUM")){
+            enemyBulletDelay = 1200;
+            enemySpawnDelay = 2500;
+            fireBulletChance = 0.4;
+        }else{
+            enemyBulletDelay = 600;
+            enemySpawnDelay = 1500;
+            fireBulletChance = 0.7;
+        }
     }
+    
+
+    
 
     public void update() {
         gamePage.bullets.removeIf(PlayerBullet::isOffScreen);
@@ -43,9 +65,9 @@ public class GameEngine {
         }
         gamePage.enemyBullets.removeAll(enemyBulletsToRemove);
 
-        if (System.currentTimeMillis() - gamePage.lastEnemyFireTime > 2000) {
+        if (System.currentTimeMillis() - gamePage.lastEnemyFireTime > enemyBulletDelay) {
             for (Enemy en : gamePage.enemies) {
-                if(Math.random()<0.3){
+                if(Math.random()<fireBulletChance){
                     gamePage.enemyBullets.add(new EnemyBullet(en.getX() + 20, en.getY() + 50));
                 }
             }
@@ -73,7 +95,7 @@ public class GameEngine {
         gamePage.enemies.removeAll(enemiesToRemove);
 
         if (gamePage.enemies.size() < gamePage.maxEnemies &&
-                System.currentTimeMillis() - gamePage.lastEnemySpawnTime > 2000) {
+            System.currentTimeMillis() - gamePage.lastEnemySpawnTime > enemySpawnDelay) {
             int randX = (int) (Math.random() * (gamePage.getWidth() - 50));
             int randY = 20 + (int) (Math.random() * 80);
             gamePage.enemies.add(new Enemy(randX, randY));
