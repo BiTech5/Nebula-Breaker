@@ -4,7 +4,9 @@ import src.core.PageNavigator;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import javax.imageio.ImageIO;
 
 public class LeadershipBoard extends JPanel {
@@ -28,10 +30,11 @@ public class LeadershipBoard extends JPanel {
         topPanel.setPreferredSize(new Dimension(fr_width, 60));
         topPanel.setOpaque(false);
 
-        // Define button
-        JButton home = new JButton("<- BACK TO HOME");
-
-        // Load arrow icon (optional)
+        JButton home = new JButton(" BACK TO HOME");
+        ImageIcon leftArrow = new ImageIcon("assets/images/left_arrow.png");
+        Image arrowImg = leftArrow.getImage();
+        Image scaleImage = arrowImg.getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        ImageIcon scaledArrow = new ImageIcon(scaleImage);
         ImageIcon arrowIcon = null;
         try {
             BufferedImage arrowImage = ImageIO.read(new File("assets/images/left-arrow.png"));
@@ -41,7 +44,6 @@ public class LeadershipBoard extends JPanel {
             System.out.println("Error loading arrow icon");
         }
 
-        // Setup button style
         home.setBounds(95, 10, 160, 40);
         home.setForeground(Color.decode("#A0F8FF"));
         home.setBackground(Color.decode("#0D0D0D"));
@@ -52,7 +54,6 @@ public class LeadershipBoard extends JPanel {
         home.setOpaque(true);
         home.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 2));
 
-        // Add navigation logic
         home.addActionListener(e -> {
             PageNavigator.navigateTo(this, new HomePage(fr_width, fr_height));
             backgroundImage = null;
@@ -61,24 +62,23 @@ public class LeadershipBoard extends JPanel {
         topPanel.add(home);
         add(topPanel, BorderLayout.NORTH);
 
-        // Create an inner panel to hold the leaderboard boxes
+        // Content panel to hold leaderboard boxes
         JPanel contentPanel = new JPanel(null);
         contentPanel.setPreferredSize(new Dimension(fr_width, 800));
         contentPanel.setOpaque(false);
 
-        // Create and add the boxes
+        // Add leaderboard boxes
         contentPanel.add(createBox("Easy", 50, 50));
         contentPanel.add(createBox("Medium", 50, 280));
         contentPanel.add(createBox("Hard", 50, 510));
 
-        // Add the content panel to a scroll pane
+        // Scroll pane
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
 
-        // Add scroll pane to the main panel
         add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -87,11 +87,49 @@ public class LeadershipBoard extends JPanel {
         box.setBounds(x, y, 300, 200);
         box.setBackground(new Color(0, 0, 50, 180));
 
-        JLabel label = new JLabel(title);
+        JLabel label = new JLabel(title + " Scores");
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("Arial", Font.BOLD, 24));
+        label.setFont(new Font("Arial", Font.BOLD, 22));
         label.setBounds(10, 10, 200, 30);
         box.add(label);
+
+        if (title.equalsIgnoreCase("Easy")) {
+            try {
+                File file = new File("data/easy.txt");
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                ArrayList<Integer> scores = new ArrayList<>();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    try {
+                        int score = Integer.parseInt(line.trim());
+                        scores.add(score);
+                    } catch (NumberFormatException e) {
+                        // Ignore invalid lines
+                    }
+                }
+                reader.close();
+
+                // Sort scores descending
+                Collections.sort(scores, Collections.reverseOrder());
+
+                // Show top 3 scores (or all if less than 3)
+                int yOffset = 50;
+                int limit = Math.min(3, scores.size());
+                for (int i = 0; i < limit; i++) {
+                    JLabel scoreLabel = new JLabel((i + 1) + ". " + scores.get(i));
+                    scoreLabel.setForeground(Color.WHITE);
+                    scoreLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+                    scoreLabel.setBounds(20, yOffset, 250, 25);
+                    box.add(scoreLabel);
+                    yOffset += 30;
+                }
+
+            } catch (IOException e) {
+                System.out.println("Error reading easy.txt");
+                e.printStackTrace();
+            }
+        }
 
         return box;
     }
