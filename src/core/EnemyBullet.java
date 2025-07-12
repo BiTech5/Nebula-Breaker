@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 
 public class EnemyBullet {
     private int x, y;
-    private final int speed = 7;
+    private final int speed = 2;
     private final Image image;
 
     public EnemyBullet(int x, int y) {
