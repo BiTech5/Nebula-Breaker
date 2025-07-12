@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import src.core.Enemy;
 import src.core.EnemyBullet;
 import src.core.GameModel.Bullet;
+
 public class GamePage extends JPanel implements KeyListener {
+
     private Image backgroundImage;
     private Player player;
     private List<PlayerBullet> bullets = new ArrayList<>();
@@ -29,6 +31,8 @@ public class GamePage extends JPanel implements KeyListener {
     private int score = 0;
     private int lives = 3;
 
+    private long lastEnemySpawnTime = 0;
+    private int maxEnemies = 5;
 
     public GamePage(int fr_width, int fr_height) {
         try {
@@ -44,7 +48,7 @@ public class GamePage extends JPanel implements KeyListener {
         player = new Player(125, 460, 100, 100);
         for (int i = 0; i < 3; i++) {
             int randX = (int) (Math.random() * (fr_width - 50));
-            int randY = 20 + (int) (Math.random() * 80); 
+            int randY = 20 + (int) (Math.random() * 80);
             enemies.add(new Enemy(randX, randY));
         }
         // game loop timer to move bullets and repaint
@@ -54,12 +58,13 @@ public class GamePage extends JPanel implements KeyListener {
                 bullet.move();
             }
             for (Enemy en : enemies) {
-                en.move(getWidth()); 
+                en.move(getWidth());
             }
-            
 
             enemyBullets.removeIf(b -> b.isOffScreen(getHeight()));
-            for (EnemyBullet eb : enemyBullets) eb.move();
+            for (EnemyBullet eb : enemyBullets) {
+                eb.move();
+            }
 
             if (System.currentTimeMillis() - lastEnemyFireTime > 1000) {
                 for (Enemy en : enemies) {
@@ -69,25 +74,33 @@ public class GamePage extends JPanel implements KeyListener {
             }
             List<Enemy> enemiesToRemove = new ArrayList<>();
             List<PlayerBullet> bulletsToRemove = new ArrayList<>();
-        
+
             for (PlayerBullet bullet : bullets) {
                 Rectangle bulletRect = bullet.getBounds();
-            
+
                 for (Enemy enemy : enemies) {
                     Rectangle enemyRect = enemy.getBounds();
-            
+
                     if (bulletRect.intersects(enemyRect)) {
                         enemiesToRemove.add(enemy);
                         bulletsToRemove.add(bullet);
                         System.out.println("bullet hit enemy");
                         score += 10;
                         scoreLabel.setText("Score: " + score);
-                        break; 
+                        break;
                     }
                 }
             }
             bullets.removeAll(bulletsToRemove);
             enemies.removeAll(enemiesToRemove);
+            if (enemies.size() < maxEnemies
+                    && System.currentTimeMillis() - lastEnemySpawnTime > 2000) { // every 2 seconds
+                int randX = (int) (Math.random() * (getWidth() - 50));
+                int randY = 20 + (int) (Math.random() * 80);
+                enemies.add(new Enemy(randX, randY));
+                lastEnemySpawnTime = System.currentTimeMillis();
+            }
+
             repaint();
         });
         gameTimer.start();
@@ -96,12 +109,12 @@ public class GamePage extends JPanel implements KeyListener {
         scoreLabel = new JLabel("Score: 0");
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
-        scoreLabel.setBounds(10, 5, 150 ,30);
+        scoreLabel.setBounds(10, 5, 150, 30);
 
         livesLabel = new JLabel("Lives:");
         livesLabel.setForeground(Color.WHITE);
         livesLabel.setFont(new Font("SansSerrif", Font.BOLD, 16));
-        livesLabel.setBounds(200, 5, 150 ,30);
+        livesLabel.setBounds(200, 5, 150, 30);
 
         add(scoreLabel);
         add(livesLabel);
@@ -124,14 +137,15 @@ public class GamePage extends JPanel implements KeyListener {
         for (Enemy enemy : enemies) {
             g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
         }
-        for (EnemyBullet b : enemyBullets)
+        for (EnemyBullet b : enemyBullets) {
             g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+        }
 
-        for(int i=0; i<lives; i++){
+        for (int i = 0; i < lives; i++) {
             g.setColor(Color.RED);
             g.fillRect(250 + i * 25, 15, 20, 15);
         }
-        
+
     }
 
     @Override
@@ -151,10 +165,14 @@ public class GamePage extends JPanel implements KeyListener {
         System.out.println("Key pressed: " + key);
         int speed = 10;
         switch (key) {
-            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> dx = -speed;
-            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> dx = speed;
-            case KeyEvent.VK_UP, KeyEvent.VK_W -> dy = -speed;
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> dy = speed;
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A ->
+                dx = -speed;
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D ->
+                dx = speed;
+            case KeyEvent.VK_UP, KeyEvent.VK_W ->
+                dy = -speed;
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S ->
+                dy = speed;
             case KeyEvent.VK_SPACE -> {
                 int shipX = player.getX();
                 int shipY = player.getY();
@@ -162,10 +180,10 @@ public class GamePage extends JPanel implements KeyListener {
                 int bulletWidth = 10;
                 int bulletHeight = 30;
 
-                int bullet1X = shipX + 10; 
+                int bullet1X = shipX + 10;
                 int bullet1Y = shipY - 20;
 
-                int bullet2X = shipX + shipWidth - bulletWidth - 10; 
+                int bullet2X = shipX + shipWidth - bulletWidth - 10;
                 int bullet2Y = shipY - 20;
 
                 bullets.add(new PlayerBullet(bullet1X, bullet1Y, bulletWidth, bulletHeight));
