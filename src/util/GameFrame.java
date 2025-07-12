@@ -3,7 +3,7 @@ package src.util;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import src.core.PlayMusic;
-import src.view.HomePage;
+import src.view.HomePage;               
 public class GameFrame extends JFrame {
     public int width=350;
     public int height = 600;

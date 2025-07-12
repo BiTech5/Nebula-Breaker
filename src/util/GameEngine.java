@@ -43,9 +43,11 @@ public class GameEngine {
         }
         gamePage.enemyBullets.removeAll(enemyBulletsToRemove);
 
-        if (System.currentTimeMillis() - gamePage.lastEnemyFireTime > 1000) {
+        if (System.currentTimeMillis() - gamePage.lastEnemyFireTime > 2000) {
             for (Enemy en : gamePage.enemies) {
-                gamePage.enemyBullets.add(new EnemyBullet(en.getX() + 20, en.getY() + 50));
+                if(Math.random()<0.3){
+                    gamePage.enemyBullets.add(new EnemyBullet(en.getX() + 20, en.getY() + 50));
+                }
             }
             gamePage.lastEnemyFireTime = System.currentTimeMillis();
         }
