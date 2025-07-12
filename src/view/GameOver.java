@@ -10,7 +10,7 @@ public class GameOver extends JPanel {
     public GameOver(int score, ActionListener onRetry, ActionListener onHome) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(true);
-        setBackground(new Color(0, 0, 0, 200)); 
+        setBackground(new Color(0, 0, 0, 150)); 
 
         JLabel title = new JLabel("Game Over");
         title.setFont(new Font("SansSerif", Font.BOLD, 32));

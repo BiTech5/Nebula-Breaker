@@ -135,8 +135,17 @@ public class GamePage extends JPanel implements KeyListener {
         for (EnemyBullet b : enemyBullets) g.drawImage(b.getImage(), b.getX(), b.getY(), this);
 
         for (int i = 0; i < lives; i++) {
-            g.setColor(Color.RED);
-            g.fillRect(250 + i * 25, 15, 20, 15);
+            
+            if(i>0){
+                scoreLabel.setVisible(true);
+                livesLabel.setVisible(true);
+                g.setColor(Color.RED);
+                g.fillRect(250 + i * 25, 15, 20, 15);
+            }
+            else{
+                scoreLabel.setVisible(false);
+                livesLabel.setVisible(false);
+            }
         }
     }
 
