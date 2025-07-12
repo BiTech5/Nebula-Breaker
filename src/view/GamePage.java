@@ -31,7 +31,7 @@ public class GamePage extends JPanel implements KeyListener {
     public JLabel scoreLabel;
     public JLabel livesLabel;
     public int score = 0;
-    public int lives = 3;
+    public int lives = 4;
 
     public long lastEnemySpawnTime = 0;
     public int maxEnemies = 5;
@@ -128,25 +128,29 @@ public class GamePage extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (backgroundImage != null) g.drawImage(backgroundImage, 0, 0, this);
-        if (player != null) g.drawImage(player.getImage(), player.getX(), player.getY(), this);
-        for (PlayerBullet bullet : bullets) g.drawImage(bullet.getImage(), bullet.getX(), bullet.getY(), this);
-        for (Enemy enemy : enemies) g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
-        for (EnemyBullet b : enemyBullets) g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+        if (backgroundImage != null)
+            g.drawImage(backgroundImage, 0, 0, this);
+        if (player != null)
+            g.drawImage(player.getImage(), player.getX(), player.getY(), this);
+        for (PlayerBullet bullet : bullets)
+            g.drawImage(bullet.getImage(), bullet.getX(), bullet.getY(), this);
+        for (Enemy enemy : enemies)
+            g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+        for (EnemyBullet b : enemyBullets)
+            g.drawImage(b.getImage(), b.getX(), b.getY(), this);
 
         for (int i = 0; i < lives; i++) {
-            
-            if(i>0){
+            if (i >0) {
                 scoreLabel.setVisible(true);
                 livesLabel.setVisible(true);
                 g.setColor(Color.RED);
                 g.fillRect(250 + i * 25, 15, 20, 15);
-            }
-            else{
+            } else {
                 scoreLabel.setVisible(false);
                 livesLabel.setVisible(false);
             }
         }
+
     }
 
     @Override
@@ -164,8 +168,10 @@ public class GamePage extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 }
