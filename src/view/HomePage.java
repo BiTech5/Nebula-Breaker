@@ -35,10 +35,10 @@ public class HomePage extends JPanel {
         int buttonHeight = 40;
         int x_lb = (fr_width - buttonWidth) / 2;
         int y_lb = fr_height - buttonHeight - 150;
-        leadershipboard = new JButton("Leadership");
+        leadershipboard = new JButton("LEADERSHIP");
         leadershipboard.setBounds(x_lb, y_lb, buttonWidth, buttonHeight);
         leadershipboard.setBackground(Color.decode("#106193"));
-        leadershipboard.setFont(new Font("Arial", Font.BOLD, 18));
+        leadershipboard.setFont(new Font("Arial", Font.BOLD, 16));
         leadershipboard.setForeground(Color.WHITE);
         leadershipboard.setFocusPainted(false);
         add(leadershipboard);
