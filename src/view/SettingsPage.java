@@ -70,6 +70,10 @@ public class SettingsPage extends JPanel {
             PageNavigator.navigateTo(this, new HomePage(fr_width, fr_height));
             backgroundImage = null;
         });
+        home.addActionListener(e -> {
+            String selectedLevel = (String)chooseLevel.getSelectedItem();
+            PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height, selectedLevel));
+        });
 
         //Title
         l1 = new JLabel();

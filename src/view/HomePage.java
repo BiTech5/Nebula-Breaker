@@ -44,7 +44,7 @@ public class HomePage extends JPanel {
         add(play);
 
         play.addActionListener(e -> {
-            PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height));
+            PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height,"EASY"));
             backgroundImage = null;
         });
         // setting button

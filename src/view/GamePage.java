@@ -42,15 +42,46 @@ public class GamePage extends JPanel implements KeyListener {
     private GameEngine engine;
     private PlayerController controller;
 
-    public GamePage(int fr_width, int fr_height) {
+    private String difficultyLevel;
+    private int enemyBulletDelay;
+    private int enemySpawnDelay;
+
+
+    public GamePage(int fr_width, int fr_height, String difficultyLevel) {
         this.fr_width = fr_width;
         this.fr_height = fr_height;
+        this.difficultyLevel = difficultyLevel;
+        setDifficultyLevel();
         loadBackgroundImage();
         setupPanel();
         initializePlayerAndEnemies();
         setupLabels();
         setupGameTimer();
+
     }
+    
+     public void setDifficultyLevel(){
+        if(difficultyLevel.equalsIgnoreCase("EASY")){
+            enemyBulletDelay = 2000;
+            enemySpawnDelay = 4000;
+        }else if(difficultyLevel.equalsIgnoreCase("MEDIUM")){
+            enemyBulletDelay = 1500;
+            enemySpawnDelay = 3000;
+        }else{
+            enemyBulletDelay = 1000;
+            enemySpawnDelay = 2000;
+        }
+    }
+    public int getEnemyBulletDelay(){
+        return enemyBulletDelay;
+    }
+    public int getEnemySpawnDelay(){
+        return enemySpawnDelay;
+    }
+
+    
+
+    
 
     private void loadBackgroundImage() {
         try {
@@ -104,7 +135,7 @@ public class GamePage extends JPanel implements KeyListener {
     }
 
     public void restartGame() {
-        PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height));
+        PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height,difficultyLevel));
         backgroundImage = null;
     }
 
