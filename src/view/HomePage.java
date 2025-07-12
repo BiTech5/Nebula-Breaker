@@ -1,6 +1,5 @@
 package src.view;
 
-import src.view.SettingsPage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,7 +7,6 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 
-import src.core.GameModel;
 import src.core.PageNavigator;
 import src.view.SettingsPage;
 public class HomePage extends JPanel {
