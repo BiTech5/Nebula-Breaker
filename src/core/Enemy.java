@@ -40,4 +40,8 @@ public class Enemy {
     public Image getImage() { return image; }
     public int getX() { return x; }
     public int getY() { return y; }
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, 50, 50); 
+    }
+    
 }

@@ -1,10 +1,9 @@
 package src.core;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.io.File;
+import javax.imageio.ImageIO;
 
 public class EnemyBullet {
     private int x, y;
@@ -18,7 +17,7 @@ public class EnemyBullet {
         Image tempImage;
         try {
             BufferedImage original = ImageIO.read(new File("assets/images/bullet/enemy_bullet.png"));
-            tempImage = original.getScaledInstance(10, 25, Image.SCALE_SMOOTH);
+            tempImage = original.getScaledInstance(20, 25, Image.SCALE_SMOOTH);
         } catch (Exception e) {
             System.out.println("Enemy bullet load error");
             e.printStackTrace();

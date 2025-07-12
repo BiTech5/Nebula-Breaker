@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import src.core.Enemy;
 import src.core.EnemyBullet;
+import src.core.GameModel.Bullet;
 public class GamePage extends JPanel implements KeyListener {
     private Image backgroundImage;
     private Player player;
@@ -28,6 +29,8 @@ public class GamePage extends JPanel implements KeyListener {
     private int score = 0;
     private int lives = 3;
 
+    List<Enemy> enemiesToRemove = new ArrayList<>();
+    List<PlayerBullet> bulletsToRemove = new ArrayList<>();
 
     public GamePage(int fr_width, int fr_height) {
         try {
@@ -67,7 +70,21 @@ public class GamePage extends JPanel implements KeyListener {
                 lastEnemyFireTime = System.currentTimeMillis();
             }
 
-           
+            for (PlayerBullet bullet : bullets) {
+                Rectangle bulletRect = bullet.getBounds();
+            
+                for (Enemy enemy : enemies) {
+                    Rectangle enemyRect = enemy.getBounds();
+            
+                    if (bulletRect.intersects(enemyRect)) {
+                        enemiesToRemove.add(enemy);
+                        bulletsToRemove.add(bullet);
+                        break; 
+                    }
+                }
+            }
+            bullets.removeAll(bulletsToRemove);
+            enemies.removeAll(enemiesToRemove);
             repaint();
         });
         gameTimer.start();
@@ -130,29 +147,27 @@ public class GamePage extends JPanel implements KeyListener {
         int dy = 0;
         System.out.println("Key pressed: " + key);
         int speed = 10;
-        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-            dx = -speed;
-        } else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-            dx = speed;
-        } else if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
-            dy = -speed;
-        } else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
-            dy = speed;
-        } else if (key == KeyEvent.VK_SPACE) {
-            int shipX = player.getX();
-            int shipY = player.getY();
-            int shipWidth = player.getImage().getWidth(null);
-            int bulletWidth = 10;
-            int bulletHeight = 30;
+        switch (key) {
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> dx = -speed;
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> dx = speed;
+            case KeyEvent.VK_UP, KeyEvent.VK_W -> dy = -speed;
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> dy = speed;
+            case KeyEvent.VK_SPACE -> {
+                int shipX = player.getX();
+                int shipY = player.getY();
+                int shipWidth = player.getImage().getWidth(null);
+                int bulletWidth = 10;
+                int bulletHeight = 30;
 
-            int bullet1X = shipX + 10; 
-            int bullet1Y = shipY - 20;
+                int bullet1X = shipX + 10; 
+                int bullet1Y = shipY - 20;
 
-            int bullet2X = shipX + shipWidth - bulletWidth - 10; 
-            int bullet2Y = shipY - 20;
+                int bullet2X = shipX + shipWidth - bulletWidth - 10; 
+                int bullet2Y = shipY - 20;
 
-            bullets.add(new PlayerBullet(bullet1X, bullet1Y, bulletWidth, bulletHeight));
-            bullets.add(new PlayerBullet(bullet2X, bullet2Y, bulletWidth, bulletHeight));
+                bullets.add(new PlayerBullet(bullet1X, bullet1Y, bulletWidth, bulletHeight));
+                bullets.add(new PlayerBullet(bullet2X, bullet2Y, bulletWidth, bulletHeight));
+            }
         }
         player.move(dx, dy, getWidth(), getHeight());
         repaint();
