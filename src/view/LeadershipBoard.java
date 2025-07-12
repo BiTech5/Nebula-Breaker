@@ -13,7 +13,6 @@ public class LeadershipBoard extends JPanel {
     private Image backgroundImage;
 
     public LeadershipBoard(int fr_width, int fr_height) {
-        // Load background image
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/leadershipBoardBg.png"));
             backgroundImage = originalImage.getScaledInstance(fr_width, fr_height, Image.SCALE_SMOOTH);
@@ -54,35 +53,38 @@ public class LeadershipBoard extends JPanel {
         topPanel.add(home);
         add(topPanel, BorderLayout.NORTH);
 
-        // Content panel to hold leaderboard boxes
+        // Slightly shrink content panel width
         JPanel contentPanel = new JPanel(null);
-        contentPanel.setPreferredSize(new Dimension(fr_width, 800));
+        contentPanel.setPreferredSize(new Dimension(fr_width - 20, 800));
         contentPanel.setOpaque(false);
 
-        // Add leaderboard boxes
-        contentPanel.add(createBox("Easy", 50, 50));
-        contentPanel.add(createBox("Medium", 50, 280));
-        contentPanel.add(createBox("Hard", 50, 510));
+        // Just shifted left for visibility
+        int boxX = 33;
 
-        // Scroll pane
+        contentPanel.add(createBox("Easy", boxX, 50));
+        contentPanel.add(createBox("Medium", boxX, 280));
+        contentPanel.add(createBox("Hard", boxX, 510));
+
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
 
         add(scrollPane, BorderLayout.CENTER);
     }
 
     private JPanel createBox(String title, int x, int y) {
         JPanel box = new JPanel(null);
-        box.setBounds(x, y, 300, 200);
+        box.setBounds(x, y, 280, 200); // width unchanged
         box.setBackground(new Color(0, 0, 50, 180));
+        box.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
 
-        JLabel label = new JLabel(title + " Scores");
+        JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setForeground(Color.WHITE);
         label.setFont(new Font("Arial", Font.BOLD, 22));
-        label.setBounds(10, 10, 200, 30);
+        label.setBounds(0, 10, 280, 30);
         box.add(label);
 
         if (title.equalsIgnoreCase("Easy")) {
@@ -97,18 +99,14 @@ public class LeadershipBoard extends JPanel {
                         int score = Integer.parseInt(line.trim());
                         scores.add(score);
                     } catch (NumberFormatException e) {
-                        // Ignore invalid lines
+                        // skip invalid
                     }
                 }
                 reader.close();
 
-                // Sort scores descending
                 Collections.sort(scores, Collections.reverseOrder());
-
-                // Show top 3 scores (or all if less than 3)
                 int yOffset = 50;
-                int limit = Math.min(3, scores.size());
-                for (int i = 0; i < limit; i++) {
+                for (int i = 0; i < Math.min(3, scores.size()); i++) {
                     JLabel scoreLabel = new JLabel((i + 1) + ". " + scores.get(i));
                     scoreLabel.setForeground(Color.WHITE);
                     scoreLabel.setFont(new Font("Arial", Font.PLAIN, 18));
