@@ -35,21 +35,13 @@ public class LeadershipBoard extends JPanel {
         Image arrowImg = leftArrow.getImage();
         Image scaleImage = arrowImg.getScaledInstance(18, 18, Image.SCALE_SMOOTH);
         ImageIcon scaledArrow = new ImageIcon(scaleImage);
-        ImageIcon arrowIcon = null;
-        try {
-            BufferedImage arrowImage = ImageIO.read(new File("assets/images/left-arrow.png"));
-            Image scaledArrow = arrowImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            arrowIcon = new ImageIcon(scaledArrow);
-        } catch (Exception e) {
-            System.out.println("Error loading arrow icon");
-        }
 
         home.setBounds(95, 10, 160, 40);
         home.setForeground(Color.decode("#A0F8FF"));
         home.setBackground(Color.decode("#0D0D0D"));
         home.setFont(new Font("SansSerif", Font.BOLD, 15));
         home.setFocusPainted(false);
-        home.setIcon(arrowIcon);
+        home.setIcon(scaledArrow);
         home.setIconTextGap(8);
         home.setOpaque(true);
         home.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 2));
