@@ -29,8 +29,6 @@ public class GamePage extends JPanel implements KeyListener {
     private int score = 0;
     private int lives = 3;
 
-    List<Enemy> enemiesToRemove = new ArrayList<>();
-    List<PlayerBullet> bulletsToRemove = new ArrayList<>();
 
     public GamePage(int fr_width, int fr_height) {
         try {
@@ -69,7 +67,9 @@ public class GamePage extends JPanel implements KeyListener {
                 }
                 lastEnemyFireTime = System.currentTimeMillis();
             }
-
+            List<Enemy> enemiesToRemove = new ArrayList<>();
+            List<PlayerBullet> bulletsToRemove = new ArrayList<>();
+        
             for (PlayerBullet bullet : bullets) {
                 Rectangle bulletRect = bullet.getBounds();
             
@@ -79,6 +79,9 @@ public class GamePage extends JPanel implements KeyListener {
                     if (bulletRect.intersects(enemyRect)) {
                         enemiesToRemove.add(enemy);
                         bulletsToRemove.add(bullet);
+                        System.out.println("bullet hit enemy");
+                        score += 10;
+                        scoreLabel.setText("Score: " + score);
                         break; 
                     }
                 }
