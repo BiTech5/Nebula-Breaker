@@ -38,7 +38,7 @@ public class HomePage extends JPanel {
         leadershipboard = new JButton("LEADERBOARD");
         leadershipboard.setBounds(x_lb, y_lb, buttonWidth, buttonHeight);
         leadershipboard.setBackground(Color.decode("#106193"));
-        leadershipboard.setFont(new Font("Arial", Font.BOLD, 16));
+        leadershipboard.setFont(new Font("Arial", Font.BOLD, 14));
         leadershipboard.setForeground(Color.WHITE);
         leadershipboard.setFocusPainted(false);
         add(leadershipboard);
