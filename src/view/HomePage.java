@@ -10,8 +10,6 @@ import javax.imageio.ImageIO;
 import java.awt.event.*;
 
 import src.core.PageNavigator;
-import src.view.GamePage;
-
 public class HomePage extends JPanel {
 
     private Image backgroundImage;

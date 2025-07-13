@@ -27,6 +27,11 @@ public class SettingsPage extends JPanel {
     private JLabel difficultyLevel;
     private JComboBox <String> chooseLevel;
 
+    public static String selectedLevel = "EASY";
+    public static String getSelectedLevel(){
+        return selectedLevel;
+    }
+
     public SettingsPage(int fr_width, int fr_height) {
         setLayout(null);
         setPreferredSize(new Dimension(fr_width, fr_height));
@@ -70,6 +75,10 @@ public class SettingsPage extends JPanel {
             PageNavigator.navigateTo(this, new HomePage(fr_width, fr_height));
             backgroundImage = null;
         });
+        // home.addActionListener(e -> {
+        //     public String selectedLevel = (String)chooseLevel.getSelectedItem();
+        //     PageNavigator.navigateTo(this, new GamePage(fr_width, fr_height));
+        // });
 
         //Title
         l1 = new JLabel();
@@ -174,6 +183,13 @@ public class SettingsPage extends JPanel {
         chooseLevel.setOpaque(true);
         chooseLevel.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 1));
         chooseLevel.setBounds(40, 70, 150, 30);
+        chooseLevel.setSelectedItem(selectedLevel);
+
+
+        chooseLevel.addActionListener(e -> {
+            selectedLevel = (String) chooseLevel.getSelectedItem();
+        });
+
 
         //Main box
         mainBox = new JPanel();
