@@ -97,7 +97,11 @@ public class GamePage extends JPanel implements KeyListener {
     private void setupGameTimer() {
         engine = new GameEngine(this);
         controller = new PlayerController(this);
-        gameTimer = new Timer(16, e -> engine.update());
+        gameTimer = new Timer(16, e -> {
+            controller.update();
+            engine.update();
+            repaint();
+        });
         gameTimer.start();
     }
 
@@ -161,12 +165,12 @@ public class GamePage extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        controller.handleKey(e.getKeyCode());
-        repaint();
+        controller.keyPressed(e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        controller.keyReleased(e.getKeyCode());
     }
 
     @Override
