@@ -51,7 +51,7 @@ public class GameEngine {
             if (playerRect.intersects(eb.getBounds())) {
                 enemyBulletsToRemove.add(eb);
                 gamePage.lives--;
-                if (gamePage.lives <= 0) {
+                if (gamePage.lives <= 1) {
                     gamePage.gameTimer.stop();
                     GameOver gameOverPanel = new GameOver(gamePage.score,
                         e1 -> gamePage.restartGame(),
