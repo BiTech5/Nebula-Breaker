@@ -53,12 +53,10 @@ public class LeadershipBoard extends JPanel {
         topPanel.add(home);
         add(topPanel, BorderLayout.NORTH);
 
-        // Slightly shrink content panel width
         JPanel contentPanel = new JPanel(null);
         contentPanel.setPreferredSize(new Dimension(fr_width - 20, 800));
         contentPanel.setOpaque(false);
 
-        // Just shifted left for visibility
         int boxX = 33;
 
         contentPanel.add(createBox("Easy", boxX, 50));
@@ -88,11 +86,11 @@ public class LeadershipBoard extends JPanel {
         box.add(label);
 
         if (title.equalsIgnoreCase("Easy")) {
-            addScoresToBox(box, "data/easy.txt");
+            addScoresToBox(box, "bin/data/easy.txt");
         } else if (title.equalsIgnoreCase("Medium")) {
-            addScoresToBox(box, "data/medium.txt");
+            addScoresToBox(box, "bin/data/medium.txt");
         } else if (title.equalsIgnoreCase("Hard")) {
-            addScoresToBox(box, "data/hard.txt");
+            addScoresToBox(box, "bin/data/hard.txt");
         }
 
         return box;
@@ -110,7 +108,6 @@ public class LeadershipBoard extends JPanel {
                     int score = Integer.parseInt(line.trim());
                     scores.add(score);
                 } catch (NumberFormatException e) {
-                    // skip invalid lines
                 }
             }
             reader.close();
@@ -121,7 +118,6 @@ public class LeadershipBoard extends JPanel {
             for (int i = 0; i < Math.min(3, scores.size()); i++) {
                 int rank = i + 1;
 
-                // Left side rank badge
                 JLabel badge = new JLabel(String.valueOf(rank), SwingConstants.CENTER);
                 badge.setOpaque(true);
                 badge.setForeground(Color.WHITE);
@@ -145,17 +141,14 @@ public class LeadershipBoard extends JPanel {
                         badge.setBackground(Color.GRAY);
                 }
 
-                // Score label next to badge
                 JLabel scoreLabel = new JLabel("Score: " + scores.get(i));
                 scoreLabel.setForeground(Color.WHITE);
                 scoreLabel.setFont(new Font("Arial", Font.BOLD, 18));
                 scoreLabel.setBounds(60, yOffset, 130, 30);
 
-                // Right side round badge (colored circle only, no text)
                 RoundBadge prizeBadge = new RoundBadge(rank);
                 prizeBadge.setBounds(210, yOffset + 5, 20, 20);
 
-                // Add to panel
                 box.add(badge);
                 box.add(scoreLabel);
                 box.add(prizeBadge);
@@ -169,7 +162,6 @@ public class LeadershipBoard extends JPanel {
         }
     }
 
-    // Custom component: small colored round badge for prizes
     private static class RoundBadge extends JComponent {
         private final int rank;
 
@@ -196,20 +188,19 @@ public class LeadershipBoard extends JPanel {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g.create();
 
-            // Smooth circle
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             Color color;
             switch (rank) {
                 case 1:
                     color = new Color(255, 215, 0);
-                    break; // Gold
+                    break; 
                 case 2:
                     color = new Color(192, 192, 192);
-                    break; // Silver
+                    break; 
                 case 3:
                     color = new Color(205, 127, 50);
-                    break; // Bronze
+                    break; 
                 default:
                     color = Color.GRAY;
             }
@@ -217,7 +208,6 @@ public class LeadershipBoard extends JPanel {
             g2.setColor(color);
             g2.fillOval(0, 0, getWidth(), getHeight());
 
-            // White border
             g2.setColor(Color.WHITE);
             g2.setStroke(new BasicStroke(2));
             g2.drawOval(1, 1, getWidth() - 3, getHeight() - 3);
