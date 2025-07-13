@@ -2,6 +2,7 @@ package src.util;
 
 import src.core.*;
 import src.view.GameOver;
+import src.util.HighScoreManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -53,6 +54,11 @@ public class GameEngine {
                 gamePage.lives--;
                 if (gamePage.lives <= 1) {
                     gamePage.gameTimer.stop();
+                    
+                    // Save the score
+                    String difficultyLevel = SettingsPage.getSelectedLevel();
+                    boolean isNewHighScore = HighScoreManager.updateHighScore(difficultyLevel, gamePage.score);
+                    
                     GameOver gameOverPanel = new GameOver(gamePage.score,
                         e1 -> gamePage.restartGame(),
                         e2 -> gamePage.goHome());
