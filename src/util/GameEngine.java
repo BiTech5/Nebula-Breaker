@@ -21,16 +21,16 @@ public class GameEngine {
         String difficultyLevel = SettingsPage.getSelectedLevel();
         if(difficultyLevel.equalsIgnoreCase("EASY")){
             enemyBulletDelay = 2000;
-            enemySpawnDelay = 4000;
-            fireBulletChance = 0.2;
-        }else if(difficultyLevel.equalsIgnoreCase("MEDIUM")){
-            enemyBulletDelay = 1200;
-            enemySpawnDelay = 2500;
+            enemySpawnDelay = 2000;
             fireBulletChance = 0.4;
-        }else{
-            enemyBulletDelay = 600;
+        }else if(difficultyLevel.equalsIgnoreCase("MEDIUM")){
+            enemyBulletDelay = 1500;
             enemySpawnDelay = 1500;
-            fireBulletChance = 0.7;
+            fireBulletChance = 0.6;
+        }else{
+            enemyBulletDelay = 1000;
+            enemySpawnDelay = 1000;
+            fireBulletChance = 0.8;
         }
     }
     
