@@ -12,6 +12,16 @@ import javax.imageio.ImageIO;
 public class LeadershipBoard extends JPanel {
     private Image backgroundImage;
 
+    private JPanel difficultyLevelBox;
+    private JLabel difficultyLevel;
+    private JComboBox <String> chooseLevel;
+
+     public static String selectedLevel = "EASY";
+    public static String getSelectedLevel(){
+        return selectedLevel;
+    }
+
+
     public LeadershipBoard(int fr_width, int fr_height) {
         try {
             BufferedImage originalImage = ImageIO.read(new File("assets/images/leadershipBoardBg.png"));
@@ -57,21 +67,56 @@ public class LeadershipBoard extends JPanel {
         contentPanel.setPreferredSize(new Dimension(fr_width - 20, 800));
         contentPanel.setOpaque(false);
 
+        int comboBoxWidth = 150;
+        int comboBoxHeight = 30;
+        int comboBoxX = (fr_width - comboBoxWidth) / 2; // Center horizontally
+        int comboBoxY = 40;
         int boxX = 33;
 
-        contentPanel.add(createBox("Easy", boxX, 50));
-        contentPanel.add(createBox("Medium", boxX, 280));
-        contentPanel.add(createBox("Hard", boxX, 510));
 
-        JScrollPane scrollPane = new JScrollPane(contentPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
+        String[] levels = {"EASY", "MEDIUM", "HARD"};
+        chooseLevel = new JComboBox<>(levels);
+        chooseLevel.setForeground(Color.decode("#A0F8FF"));
+        chooseLevel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        chooseLevel.setBackground(Color.decode("#0D0D0D"));
+        chooseLevel.setOpaque(true);
+        chooseLevel.setBorder(BorderFactory.createLineBorder(Color.decode("#00D8FF"), 1));
+        chooseLevel.setBounds(comboBoxX, comboBoxY, comboBoxWidth, comboBoxHeight);        chooseLevel.setSelectedItem(selectedLevel);
+        contentPanel.add(chooseLevel);
 
-        add(scrollPane, BorderLayout.CENTER);
+        JPanel scoreBox = new JPanel(null);
+        scoreBox.setBounds(boxX, 130, 280, 200);  // x = boxX, y = below dropdown
+        scoreBox.setOpaque(false);
+        contentPanel.add(scoreBox);
+
+        chooseLevel.addActionListener(e -> {
+            selectedLevel = (String) chooseLevel.getSelectedItem();
+            updateScoreBox(scoreBox, selectedLevel);
+        });
+
+        int scoreBoxY = comboBoxY + comboBoxHeight + 30;
+        scoreBox.setBounds(boxX, scoreBoxY, 280, 200);
+        contentPanel.add(scoreBox);
+
+        updateScoreBox(scoreBox, selectedLevel);
+        add(contentPanel, BorderLayout.CENTER);
+
+
+
     }
+
+    private void updateScoreBox(JPanel scoreBox, String level) {
+    scoreBox.removeAll();
+
+    String title = level.substring(0, 1).toUpperCase() + level.substring(1).toLowerCase(); // Easy, Medium, Hard
+    JPanel box = createBox(title, 0, 0); 
+    box.setBounds(0, 0, 280, 200);
+
+    scoreBox.add(box);
+    scoreBox.revalidate();
+    scoreBox.repaint();
+}
+
 
     private JPanel createBox(String title, int x, int y) {
         JPanel box = new JPanel(null);
