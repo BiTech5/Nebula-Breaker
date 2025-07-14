@@ -9,7 +9,7 @@ public class PlayerController {
     private boolean left, right, up, down, space;
     private final int speed = 5;
     private long lastShotTime = 0;
-    private final long shootDelay = 300; // delay for shots
+    private final long shootDelay = 600; // delay for shots
 
 
 

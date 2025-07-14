@@ -61,7 +61,10 @@ public class Player {
             y = panelHeight - playerImage.getHeight(null);
     }
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height); 
+         int padding = 10;
+        return new Rectangle(x + padding,
+        y + padding, width - 3 * padding,
+        height - 2 * padding); 
     }
     
 }

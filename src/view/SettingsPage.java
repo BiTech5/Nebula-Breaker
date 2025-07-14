@@ -121,7 +121,12 @@ public class SettingsPage extends JPanel {
         musicLabel.setBounds(30, 70, 80, 20);
 
         //toggle music
-        toggleMusicBtn = new JToggleButton("ON");
+        if(PlayMusic.musicOn){
+            toggleMusicBtn = new JToggleButton("ON", false);
+        }else{
+            toggleMusicBtn = new JToggleButton("OFF", true);
+        }
+        
         toggleMusicBtn.setForeground(Color.decode("#A0F8FF"));
         toggleMusicBtn.setFont(new Font("SansSerif", Font.BOLD, 16));
         toggleMusicBtn.setBackground(Color.decode("#0D0D0D"));
