@@ -117,7 +117,7 @@ public class LeadershipBoard extends JPanel {
     scoreBox.repaint();
 }
 
-
+// comment
     private JPanel createBox(String title, int x, int y) {
         JPanel box = new JPanel(null);
         box.setBounds(x, y, 280, 200);
