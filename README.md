@@ -152,6 +152,3 @@ Nebula-Breaker is a classic arcade-style space shooter game built in Java with a
 ## License
 
 This project is licensed under the MIT License.
-
----
-
